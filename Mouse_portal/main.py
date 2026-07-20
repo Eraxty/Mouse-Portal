@@ -1,8 +1,14 @@
-from mouse import get_mouse_position
-import time
+import sys
+from PySide6.QtWidgets import QApplication
+from portal import PortalOverlay
 
-while True:
-    x, y = get_mouse_position()
-    print(f"X: {x}, Y: {y}")
+app = QApplication(sys.argv)
 
-    time.sleep(0.05)
+overlay = PortalOverlay()
+overlay.show()
+
+#temp test portal
+overlay.set_orange(500, 500)
+overlay.set_blue(900, 500)
+
+sys.exit(app.exec())
