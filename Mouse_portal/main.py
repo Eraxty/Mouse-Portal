@@ -1,22 +1,28 @@
 import sys
 from PySide6.QtWidgets import QApplication
 from PySide6.QtCore import Qt
-from portal import PortalOverlay
+
+from portal import Portal
 from mouse import get_mouse_position
 
-class App(PortalOverlay):
+
+class PortalApp(Portal):
     def keyPressEvent(self, event):
         x, y = get_mouse_position()
 
         if event.key() == Qt.Key_Z:
-            self.set_orange(x, y)
-            print("Orange:", x, y)
+            orange.place(x, y)
 
         elif event.key() == Qt.Key_X:
-            self.set_blue(x, y)
-            print("Blue:", x, y)
+            blue.place(x, y)
+
 
 app = QApplication(sys.argv)
-overlay = App()
-overlay.show()
+
+orange = PortalApp("assets/portal_orange.png")
+blue = PortalApp("assets/portal_blue.png")
+
+orange.place(500, 500)
+blue.place(900, 500)
+
 sys.exit(app.exec())
