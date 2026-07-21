@@ -1,13 +1,14 @@
 from PySide6.QtWidgets import QWidget, QApplication
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QPainter, QPen, QColor
+from PySide6.QtGui import QPixmap, QPainter
 
 class PortalOverlay(QWidget):
     def __init__(self):
         super().__init__()
-
         self.orange = None
         self.blue = None
+        self.orange_img = QPixmap("assets/portal_orange.png")
+        self.blue_img = QPixmap("assets/portal_blue.png")
 
         self.setWindowFlags(
             Qt.FramelessWindowHint |
@@ -28,13 +29,12 @@ class PortalOverlay(QWidget):
 
     def paintEvent(self, event):
         painter = QPainter(self)
+        painter.setRenderHint(QPainter.Antialiasing)
 
         if self.orange:
-            painter.setPen(QPen(QColor("orange"), 5))
             x, y = self.orange
-            painter.drawEllipse(x - 20, y - 40, 40, 80)
+            painter.drawPixmap(x - 20, y - 40, 40, 80, self.orange_img)
 
         if self.blue:
-            painter.setPen(QPen(QColor("blue"), 5))
             x, y = self.blue
-            painter.drawEllipse(x - 20, y - 40, 40, 80)
+            painter.drawPixmap(x - 20, y - 40, 40, 80, self.blue_img)
