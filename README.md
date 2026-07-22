@@ -25,8 +25,11 @@ Built on and for Hyprland on Arch Linux x86_64.
 ## Screenshot
 
 ![Mouse Portal Demo](assets/ss.png)
+Peak
 
-Peak.
+## Demo
+<video src="assets/vid.mp4" controls></video>
+
 
 ## Requirements
 
