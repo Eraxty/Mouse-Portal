@@ -17,7 +17,11 @@ class Teleporter:
         return (abs(mouse_x - x) < portal.width() // 2 and abs(mouse_y - y) < portal.height() // 2)
 
     def check(self):
+        if QApplication.keyboardModifiers() & Qt.MetaModifier:
+            return
+
         mouse_x, mouse_y = get_mouse_position()
+        
         if self.cooldown:
             if (not self.inside(mouse_x, mouse_y, self.orange) and not self.inside(mouse_x, mouse_y, self.blue)): self.cooldown = False
             return
