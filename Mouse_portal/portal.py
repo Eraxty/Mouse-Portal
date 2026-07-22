@@ -15,9 +15,9 @@ class Portal(QWidget):
         self.setWindowFlags(
             Qt.FramelessWindowHint |
             Qt.WindowStaysOnTopHint |
-            Qt.Tool |
             Qt.WindowTransparentForInput
         )
+
         self.setAttribute(Qt.WA_TranslucentBackground)
 
     def place(self, x, y):
@@ -26,16 +26,15 @@ class Portal(QWidget):
 
     def paintEvent(self, event):
         painter = QPainter(self)
-        painter.drawPixmap(0,0,self.width(),self.height(),self.image)
+        painter.drawPixmap(0, 0, self.width(), self.height(), self.image)
 
     def center(self):
-        result = subprocess.check_output(["hyprctl", "clients", "-j"],text=True)
+        result = subprocess.check_output(["hyprctl", "clients", "-j"], text=True)
         clients = json.loads(result)
         for client in clients:
-
             if client.get("title") == self.name:
                 x, y = client["at"]
                 width, height = client["size"]
-                return (x + width // 2,y + height // 2)
+                return (x + width // 2, y + height // 2)
 
-        return (self.x() + self.width() // 2,self.y() + self.height() // 2)
+        return (self.x() + self.width() // 2, self.y() + self.height() // 2)

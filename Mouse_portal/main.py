@@ -3,6 +3,7 @@ from PySide6.QtWidgets import QApplication
 from PySide6.QtCore import QTimer
 from portal import Portal
 from teleport import Teleporter
+import subprocess
 
 app = QApplication(sys.argv)
 
@@ -11,6 +12,12 @@ blue = Portal("assets/portal_blue.png", "MousePortalBlue")
 
 orange.show()
 blue.show()
+
+def move_portals():
+    subprocess.run(["hyprctl", "dispatch", 'hl.dsp.window.move({ x = 300, y = 500, window = "title:MousePortalOrange" })'])
+    subprocess.run(["hyprctl", "dispatch", 'hl.dsp.window.move({ x = 1200, y = 500, window = "title:MousePortalBlue" })'])
+
+QTimer.singleShot(200, move_portals)
 
 teleporter = Teleporter(orange, blue)
 

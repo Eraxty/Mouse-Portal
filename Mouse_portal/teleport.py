@@ -1,5 +1,7 @@
 import subprocess
 from mouse import get_mouse_position
+from PySide6.QtWidgets import QApplication
+from PySide6.QtCore import Qt
 
 class Teleporter:
     def __init__(self, orange, blue):
