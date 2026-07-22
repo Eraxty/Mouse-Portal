@@ -8,6 +8,7 @@ class Teleporter:
         self.orange = orange
         self.blue = blue
         self.cooldown = False
+        self.last_mouse = get_mouse_position()
 
     def move_mouse(self, x, y):
         subprocess.run(["hyprctl", "dispatch", f"hl.dsp.cursor.move({{ x = {x}, y = {y} }})"])
@@ -21,18 +22,28 @@ class Teleporter:
             return
 
         mouse_x, mouse_y = get_mouse_position()
-        
+        last_x, last_y = self.last_mouse
+
         if self.cooldown:
-            if (not self.inside(mouse_x, mouse_y, self.orange) and not self.inside(mouse_x, mouse_y, self.blue)): self.cooldown = False
+            if (not self.inside(mouse_x, mouse_y, self.orange) and not self.inside(mouse_x, mouse_y, self.blue)):
+                self.cooldown = False
+            self.last_mouse = (mouse_x, mouse_y)
             return
 
         if self.inside(mouse_x, mouse_y, self.orange):
             x, y = self.blue.center()
-            self.move_mouse(x + self.blue.width(), y)
+            if mouse_x > last_x:
+                self.move_mouse(x + self.blue.width(), y)
+            else:
+                self.move_mouse(x - self.blue.width(), y)
             self.cooldown = True
 
         elif self.inside(mouse_x, mouse_y, self.blue):
             x, y = self.orange.center()
-            self.move_mouse(x - self.orange.width(), y)
+            if mouse_x > last_x:
+                self.move_mouse(x + self.orange.width(), y)
+            else:
+                self.move_mouse(x - self.orange.width(), y)
             self.cooldown = True
-            
+
+        self.last_mouse = (mouse_x, mouse_y)
